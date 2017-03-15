@@ -17,18 +17,21 @@ var stringifyJSON = function(obj) {
     }
     return '[' + arr + ']';
   } else if (typeof obj === 'object') {
-  	var objArray = Array.prototype.slice.call(obj);
   	var result = [];
-  	if (obj.length === 0) {
-  		return '[]';
-  	} else if (objArray.length === 0) {
-  	  return result.toString();
+  	var keys = Object.keys(obj);
+    var values = [];
+    if (keys[0] === 'functions' || keys[0] === 'undefined') {
+      return '{}';
     } else {
-  	  result.push(objArray.pop());
-  	  stringifyJSON(objArray);
+      for (var key in obj) {
+        values.push(obj[key]);
+      }
+      for (var i = 0; i < keys.length; i++) {
+        result.push(stringifyJSON(keys[i]) + ':' + stringifyJSON(values[i]));
+      }
+      return '{' + result + '}';
     }
   }	
-  return resultString;
 };
 
 
