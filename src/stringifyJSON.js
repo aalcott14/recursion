@@ -5,11 +5,17 @@
 
 var stringifyJSON = function(obj) {
   if (typeof obj === 'number' || obj === true || obj === false) {
-  	return obj.toString();
+  	 return obj.toString();
   } else if (obj === null) {
   	return String(obj);
   } else if (typeof obj === 'string') {
-  	return '\"'+ obj + '\"';
+  	return '\"' + obj + '\"';
+  } else if (Array.isArray(obj)) {
+    var arr = [];
+    for (var i = 0; i < obj.length; i++) {
+      arr.push(stringifyJSON(obj[i]));
+    }
+    return '[' + arr + ']';
   } else if (typeof obj === 'object') {
   	var objArray = Array.prototype.slice.call(obj);
   	var result = [];
@@ -22,4 +28,7 @@ var stringifyJSON = function(obj) {
   	  stringifyJSON(objArray);
     }
   }	
+  return resultString;
 };
+
+
