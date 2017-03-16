@@ -6,5 +6,15 @@
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className
 ) {
-  // your code here
+  var elements = [];
+  function searchForElements(node) {
+		if(node.classList.contains(className)){
+       elements.push(node);
+  	}
+  	for(var i = 0; i < node.children.length; i++){
+      searchForElements(node.children[i]);
+  	}
+  }
+  searchForElements(document.body);
+  return elements;
 };
